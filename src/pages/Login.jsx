@@ -24,7 +24,7 @@ export default function Login() {
 
       localStorage.setItem('token', data.access_token);
 
-      navigate('/');  // redirige después del login exitoso
+      navigate('/estadisticas');  // redirige después del login exitoso
     } catch (error) {
       console.error('Error al iniciar sesión:', error);
       alert('Usuario o contraseña incorrectos');

@@ -14,6 +14,7 @@ import {
 } from "recharts";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
+import ContactTable from "../components/ContactTable";
 
 const COLORS = ["#7fcdc2", "#8884d8", "#ffc658", "#82ca9d", "#ff7f50"];
 
@@ -86,6 +87,16 @@ export default function Estadisticas() {
     })
   );
 
+  const confirmedCount = contacts.filter((c) => c.confirmed === true).length;
+  const notConfirmedCount = contacts.filter(
+    (c) => c.confirmed === false
+  ).length;
+
+  const confirmedData = [
+    { name: "Confirmados", value: confirmedCount },
+    { name: "No confirmados", value: notConfirmedCount },
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-cyan-50 to-white">
       <Navbar />
@@ -101,7 +112,56 @@ export default function Estadisticas() {
               <span className="font-semibold">{totalContacts}</span>
             </p>
           </header>
+          <div className="w-full">
+            {/* Aqui */}
+            <div className="mb-6 grid grid-cols-2 md:grid-cols-5 gap-4 text-center">
+              <div className="bg-white rounded shadow p-4 border border-neutral-200">
+                <h3 className="text-gray-600 font-semibold mb-2">
+                  Total Contactos
+                </h3>
+                <p className="text-3xl font-bold text-[#488b83]">
+                  {totalContacts}
+                </p>
+              </div>
 
+              <div className="bg-white rounded shadow p-4 border border-neutral-200">
+                <h3 className="text-gray-600 font-semibold mb-2">
+                  Correos Válidos
+                </h3>
+                <p className="text-3xl font-bold text-green-600">
+                  {validCount}
+                </p>
+              </div>
+
+              <div className="bg-white rounded shadow p-4 border border-neutral-200">
+                <h3 className="text-gray-600 font-semibold mb-2">
+                  Correos Inválidos
+                </h3>
+                <p className="text-3xl font-bold text-red-600">
+                  {invalidCount}
+                </p>
+              </div>
+
+              <div className="bg-white rounded shadow p-4 border border-neutral-200">
+                <h3 className="text-gray-600 font-semibold mb-2">
+                  Confirmados
+                </h3>
+                <p className="text-3xl font-bold text-green-700">
+                  {confirmedCount}
+                </p>
+              </div>
+
+              <div className="bg-white rounded shadow p-4 border border-neutral-200">
+                <h3 className="text-gray-600 font-semibold mb-2">
+                  No Confirmados
+                </h3>
+                <p className="text-3xl font-bold text-red-700">
+                  {notConfirmedCount}
+                </p>
+              </div>
+            </div>
+            <ContactTable />
+          </div>
           <main className="bg-white py-6 border border-neutral-200 rounded w-full mx-auto px-6 pb-16 grid grid-cols-1 md:grid-cols-2 gap-3 text-center">
             {/* Tarjeta componente común */}
             {/** Distribución de dominios */}
@@ -207,6 +267,25 @@ export default function Estadisticas() {
                   {deliverabilityData.map((_, i) => (
                     <Cell key={i} fill={COLORS[i % COLORS.length]} />
                   ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </section>
+            <section className="bg-white rounded-xl shadow-md p-6 border border-neutral-200">
+              <h2 className="text-xl font-semibold text-gray-800 mb-4">
+                Correos Confirmados
+              </h2>
+              <PieChart width={400} height={300}>
+                <Pie
+                  data={confirmedData}
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={100}
+                  label
+                  dataKey="value"
+                >
+                  <Cell fill="#22c55e" /> {/* Verde para confirmados */}
+                  <Cell fill="#ef4444" /> {/* Rojo para no confirmados */}
                 </Pie>
                 <Tooltip />
               </PieChart>

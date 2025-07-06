@@ -23,7 +23,7 @@ export default function Estadisticas() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/contacts")
+      .get(`${import.meta.env.VITE_API_URL}/contacts`)
       .then((res) => setContacts(res.data))
       .catch((err) => console.error("Error al obtener contactos:", err));
   }, []);

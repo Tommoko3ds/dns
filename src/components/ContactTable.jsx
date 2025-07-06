@@ -10,7 +10,7 @@ export default function ContactsTable() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/contacts")
+      .get(`${import.meta.env.VITE_API_URL}/contacts`)
       .then((res) => setContacts(res.data))
       .catch((err) => console.error("Error fetching contacts:", err));
   }, []);
@@ -37,7 +37,7 @@ export default function ContactsTable() {
   // Toggle función para actualizar el estado confirmado
   const toggleConfirmed = async (id, currentState) => {
     try {
-      await axios.put(`http://localhost:3000/contacts/${id}`, { confirmed: !currentState });
+      await axios.put(`${import.meta.env.VITE_API_URL}/contacts/${id}`, { confirmed: !currentState });
 
       setContacts((prev) =>
         prev.map((c) =>
